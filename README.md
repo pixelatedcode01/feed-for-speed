@@ -1,4 +1,4 @@
-# data-wrangling-project
+# Formula 1 Analysis
 
 Data Wrangling Project in R and Julia
 
