@@ -110,36 +110,8 @@ ui <- fluidPage(
                                          tags$h3(class="text", textOutput('text2'))
                                          )
                                          ),
-                                uiOutput(outputId = 'overlapplothead'), plotOutput(outputId = 'overlapplot'))), 
-              tabPanel("Insights", navbarPage(title = "Insights", 
-                                                    tabPanel("Introduction", 
-                                                             tags$h1("Feed For Speed"),
-                                                             tags$div(class="year", selectInput(inputId = 'main', '', c("Select Year", 2023:1950))),
-                                                             tags$br(),
-                                                             tags$div(class="", actionButton("goMainYear", "Submit")),
-                                                             tags$br(),
-                                                             tags$div(class="year", selectInput(inputId = 'maincircuit', '', c("Select Circuit", NULL))),
-                                                             tags$br(),
-                                                             tags$div(class="", actionButton("goMain", "Submit", class="btn-success"))),
-                                                    tabPanel("Better vs Faster", uiOutput(outputId = "heading1"), plotOutput("race_points"),
-                                                             uiOutput(outputId = "heading2"), plotOutput("fastest")),
-                                                    tabPanel("Race Results", sidebarLayout(
-                                                      mainPanel(gt_output(outputId = "raceresults")),
-                                                      sidebarPanel("Race Results")
-                                                    )),
-                                                    tabPanel("Pitstop Analysis", sidebarLayout(
-                                                      mainPanel(gt_output(outputId = "pitstop")),
-                                                      sidebarPanel("Pitstop Analysis")
-                                                    )),
-                                                    tabPanel("Overall Comparison", sidebarLayout(
-                                                      mainPanel(gt_output(outputId = "overall")),
-                                                      sidebarPanel("Overall Comparison")
-                                                    )),
-                                                    tabPanel("Pole Position vs Starting Position", sidebarLayout(
-                                                      mainPanel(gt_output(outputId = "pvs")),
-                                                      sidebarPanel("Start vs Finish")
-                                                    )),
-                                                    tabPanel("Race Hotness Meter", tags$div(class="container",
+                                uiOutput(outputId = 'overlapplothead'), plotOutput(outputId = 'overlapplot'))),
+                                                                  tabPanel("Race Hotness Meter", tags$div(class="container",
                                                                                             tags$div(class="first", tags$img(class="logo", src="f1-logo-final.png")),
                                                                                             tags$div(class="second", 
                                                                                                      tags$div(class="year", selectInput(inputId = 'country_input', '', c("Select Country", cir_ov$Country))),
@@ -148,8 +120,36 @@ ui <- fluidPage(
                                                                                                      tags$div(class="circuit button", actionButton("goTrack", "Submit")),
                                                                                                      tags$div(class="circuit", selectInput(inputId = 'year_inp1', '', c("Select Year", NULL))),
                                                                                                      tags$div(class="circuit button", actionButton("goYearHotness", "Submit", class="btn-success")))),
-                                                             tags$div(plotOutput(outputId = "overallhotness", height = 600)),
-                                                             uiOutput(outputId = "stats"))
+                                                             tags$div(plotOutput(outputId = "overallhotness", height = 600)), uiOutput(outputId = "stats")), 
+              tabPanel("Insights", navbarPage(title = "Insights", 
+                                                    tabPanel("Introduction", 
+                                                             tags$h1("Feed For Speed"),
+                                                             tags$div(class="year", selectInput(inputId = 'main', 'Select Year', c("Select Year", 2023:1950))),
+                                                             tags$br(),
+                                                             tags$div(class="", actionButton("goMainYear", "Submit")),
+                                                             tags$br(),
+                                                             tags$div(class="year", selectInput(inputId = 'maincircuit', 'Select Circuit', c("Select Circuit", NULL))),
+                                                             tags$br(),
+                                                             tags$div(class="", actionButton("goMain", "Submit", class="btn-success"))),
+                                                    tabPanel("Better vs Faster", uiOutput(outputId = "heading1"), plotOutput("race_points"),
+                                                             uiOutput(outputId = "heading2"), plotOutput("fastest")),
+                                                  #  tabPanel("Race Results", sidebarLayout(
+                                                  #    mainPanel(gt_output(outputId = "raceresults")),
+                                                  #    sidebarPanel("Race Results")
+                                                  #  )),
+                                                    tabPanel("Pitstop Analysis", sidebarLayout(
+                                                      mainPanel(gt_output(outputId = "pitstop")),
+                                                      sidebarPanel("Pitstop Analysis: This table offers a detailed breakdown of each driver's pitstop count, pitstop durations, and the specific laps on which these pitstops occurred. This data serves as a crucial tool for pinpointing the drivers who made the most efficient pitstops and those who lagged behind, wasting valuable time.")
+                                                    )),
+                                                    tabPanel("Race Analysis", sidebarLayout(
+                                                      mainPanel(gt_output(outputId = "overall")),
+                                                      sidebarPanel("Overall Comparison: This table offers a comprehensive race overview, encompassing key elements such as total pitstop time, initial grid placement, analysis of the fastest lap, and the ultimate race position. It enables a detailed examination of these factors, helping to rationalize the final race standings for each driver.")
+                                                    )),
+                                                    tabPanel("Position Gained or Lost", sidebarLayout(
+                                                      mainPanel(gt_output(outputId = "pvs")),
+                                                      sidebarPanel("Start vs Finish: This table offers a detailed account of how many positions each driver gained or lost throughout the race. The higher the numbers, the more intense the race, showcasing a greater number of overtaking maneuvers and changes in position, adding an extra layer of excitement and drama to the event.")
+                                                    )),
+
                                                       ))))
 
 server <- function(input, output, session) {
@@ -249,15 +249,15 @@ server <- function(input, output, session) {
     all_relations <- all_dfs(df = circuit_main_df, year_inp = inp_year, circuit = inp_circuit)
     raceresults_df <- all_relations[[1]]
     raceresults_df <- raceresults_df %>% gt() %>% gt_theme_538() %>% tab_header(title = sprintf("Race Results for %d", inp_year),subtitle = "Race Results")
-    output$raceresults <- render_gt(expr = raceresults_df)
+    #output$raceresults <- render_gt(expr = raceresults_df)
     win_loss <- start_grid_summary(results_df = all_relations[[2]], start_grid_df = all_relations[[5]])
-    win_loss <- win_loss %>% gt() %>% gt_theme_538() %>% tab_header(title = sprintf("PVS for %s, %d", inp_circuit, inp_year),subtitle = "Race Results") %>% data_color(columns = `Position+G/-L`, palette = c('red', 'green'))
+    win_loss <- win_loss %>% gt() %>% gt_theme_538() %>% tab_header(title = sprintf("Positions Gained or Lost for %s, %d", inp_circuit, inp_year),subtitle = "Starting Grid comparison") %>% data_color(columns = `Position+G/-L`, palette = c('red', 'green'))
     output$pvs <- render_gt(expr = win_loss)
     pitstops_df <- pitstop_analysis(results_df = all_relations[[2]], pitstops_df = all_relations[[4]])
-    pitstops_df <- pitstops_df %>% gt() %>% gt_theme_538() %>% tab_header(title = sprintf("Pitstops Analysis for %s, %d", inp_circuit, inp_year),subtitle = "Race Results")
+    pitstops_df <- pitstops_df %>% gt() %>% gt_theme_538() %>% tab_header(title = sprintf("Pitstop Analysis for %s, %d", inp_circuit, inp_year),subtitle = "Driver Pitstop Count")
     output$pitstop <- render_gt(expr = pitstops_df)
     overall_df <- overall_summary(pitstop_df = all_relations[[4]], starting_grid_df = all_relations[[5]], fastest_lap_df = all_relations[[3]], results_df = all_relations[[2]])
-    overall_df <- overall_df %>% gt() %>% gt_theme_538() %>% tab_header(title = sprintf("Overall Analysis for %s, %d", inp_circuit, inp_year),subtitle = "Race Results")
+    overall_df <- overall_df %>% gt() %>% gt_theme_538() %>% tab_header(title = sprintf("Race Analysis for %s, %d", inp_circuit, inp_year),subtitle = "Overall Summary") %>% cols_align(align = "center")
     output$overall <- render_gt(expr = overall_df)
     plot_summary_race <- plot_summary(dataframe = all_relations[[2]], inp_circuit)
     output$heading1 <- renderUI({
@@ -365,54 +365,50 @@ server <- function(input, output, session) {
   })
     
     
+  observeEvent(input$goButton, {
+    race_year <- input$year_inp
+    final <- race_circuits(as.numeric(race_year))
+    updateSelectInput(session = session, inputId = "track", choices = c("Select Circuit", final$Circuits))
+  })
   
-  output$racechart <- renderImage({
-    if (input$year_inp != "Select Year"){
-      race_year <- input$year_inp
-      }
-    if (input$goButton){
-      final <- race_circuits(as.numeric(race_year))
-      updateSelectInput(session = session, inputId = "track", choices = c("Select Circuit", final$Circuits))
-    }
-    else{
-      
-    }
-    if (input$raceButton & input$track != 'Select Circuit'){
-      circuit <- input$track
-      merged <- race_positions(final, circuit)
-      #plot_race(merged, circuit)
-      plot <- merged %>% 
-        ggplot(aes(x = as.numeric(Poisition), y = Points, fill = Drivers)) +
-        geom_col(alpha = 0.7) +
-        scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
-        geom_text(aes(y = Points
-                      , label = paste(Drivers)
-                      , color = Drivers)
-                  , hjust = - 0.2, size = 5) +
-        labs(title = sprintf('Race for %s', circuit), x = "", y = 'Lap: {closest_state}', caption = "Race") +
-        coord_flip() +
-        scale_x_reverse() +
-        theme_minimal() +
-        theme(axis.text.y = element_blank()
-              , axis.ticks.y = element_blank()
-              , axis.ticks.x = element_blank()
-              , axis.text.x = element_blank()
-              , plot.margin = margin(2, 2, 2, 2, "cm")
-              , plot.title = element_text(size = 20, color = "black", face = "bold")
-              , axis.title = element_text(size=30,face="bold", color="grey")
-              , legend.position = "none"
-              , panel.grid.minor.x = element_blank()
-              , panel.grid.major.x = element_blank()) +
-        transition_states(Laps, state_length = 0, wrap = FALSE)
-      
-      anim_save(filename = "racing.gif", animation = plot, start_pause = 30, end_pause = 30, height = 750, width = 1800, nframes = 200, fps = 20)
-      
-    }
-    else{
-    }
-    list(src = "racing.gif", contentType = "image/gif")
-  }, deleteFile = FALSE
-  )
+  observeEvent(input$raceButton, {
+    race_year <- input$year_inp
+    final <- race_circuits(as.numeric(race_year))
+    circuit <- input$track
+    merged <- race_positions(final, circuit)
+    #plot_race(merged, circuit)
+    plot <- merged %>% 
+      ggplot(aes(x = as.numeric(Poisition), y = Points, fill = Drivers)) +
+      geom_col(alpha = 0.7) +
+      scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
+      geom_text(aes(y = Points
+                    , label = paste(Drivers)
+                    , color = Drivers)
+                , hjust = - 0.2, size = 5) +
+      labs(title = sprintf('Race for %s', circuit), x = "", y = 'Lap: {closest_state}', caption = "Race") +
+      coord_flip() +
+      scale_x_reverse() +
+      theme_minimal() +
+      theme(axis.text.y = element_blank()
+            , axis.ticks.y = element_blank()
+            , axis.ticks.x = element_blank()
+            , axis.text.x = element_blank()
+            , plot.margin = margin(2, 2, 2, 2, "cm")
+            , plot.title = element_text(size = 20, color = "black", face = "bold")
+            , axis.title = element_text(size=30,face="bold", color="grey")
+            , legend.position = "none"
+            , panel.grid.minor.x = element_blank()
+            , panel.grid.major.x = element_blank()) +
+      transition_states(Laps, state_length = 0, wrap = FALSE)
+    
+    anim_save(filename = "racing.gif", animation = plot, start_pause = 30, end_pause = 30, height = 750, width = 1800, nframes = 200, fps = 20)
+    
+    output$racechart <- renderImage({
+      list(src = "racing.gif", contentType = "image/gif")
+    },deleteFile = FALSE)
+  })
+  
+
   
 }
 

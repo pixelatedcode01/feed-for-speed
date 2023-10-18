@@ -44,7 +44,7 @@ overall_summary <- function(pitstop_df, starting_grid_df, fastest_lap_df, result
     left_join(results_df, by = "No") %>%
     left_join(fastest_lap_df, by = "No") %>%
     select(-Driver.x, -Driver.y, -Car.x, -Car.y, -Pos.y) %>%
-    dplyr::rename('Starting.Position' = Pos.x, 'Race.Position' = Pos, 'Fastest.Lap.Time' = Time)
+    dplyr::rename('Starting.Position' = Pos.x, 'Race.Position' = Pos, 'Fastest.Lap.Time' = Time, 'Fastest.Lap' = Lap)
   
   # Lets sort the table with lowest pitstops time.
   sorted_pitstop_time <- test[order(test$`Total.Pitstop.Time(S)`, na.last = TRUE), ]
