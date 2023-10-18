@@ -1,0 +1,192 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    /*background-color: grey;*/
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+
+}
+
+.first {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*background-color: red;*/
+    flex: 1;
+}
+
+.second {
+    display: flex;
+    /*background-color: blue;*/
+    flex: 2;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.third {
+    /*background-color: pink;*/
+    flex: 4;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 7px 7px 16px #888888;
+}
+.forth {
+    flex: 4;
+    display: flex;
+}
+.logo {
+    height: 100px;
+}
+
+.year {
+    height: 50%;
+    width: 300px;
+}
+
+.circuit {
+    /*background-color: white;*/
+    height: 50%;
+    width: 300px;
+}
+
+.button {
+    height: 50px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.table {
+    flex: 1;
+}
+
+.head {
+    flex: 1;
+}
+.text {
+    text-align: center;
+
+}
+.pimage1 {
+    display: inline-block;
+    margin-top: 50px;
+    height: 200px;
+    margin-left: 300px;
+    margin-bottom: 10px;
+    width: 150px;
+    /*background-color: black;*/
+}
+
+.pimage2 {
+    display: inline-block;
+    height: 200px;
+    margin-left: 50px;
+    margin-bottom: 10px;
+    width: 150px;
+    /*background-color: brown;*/
+}
+
+
+
+
+
+/* CSS FOR MAIN PAGE */
+
+.background {
+    background-color: red;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.main_image {
+    background-color: aqua;
+    flex: 2;
+    background-image: url("main_image.jpg");
+}
+
+.logo-white {
+    height: 150px;
+    width: 300px;
+    background-image: url("f1-r-logo-white.png");
+    background-position: center;
+    background-size: contain;
+    background-size: cover;
+    background-size: 70%;
+    background-repeat: no-repeat;
+
+}
+
+.footer {
+    background-color: brown;
+    flex: 1;
+    display: flex;
+}
+
+.footer div {
+    flex: 1;
+    background-color: blue;
+    filter: grayscale(100%);
+    background-position: center;
+    background-size: contain;
+    background-size: cover;
+}
+
+.footer div:hover {
+    filter: none;
+}
+
+.one {
+    background-image: url("one.jpg");
+}
+
+
+.two {
+    background-image: url("two.jpg");
+}
+
+.three {
+    background-image: url("three.jpg");
+
+
+}
+
+.four {
+    background-image: url("four.jpg");
+
+
+}
+
+.five {
+    background-image: url("five.jpg");
+
+}
+
+.divtext {
+    color: aliceblue;
+    background-color: red;
+    text-align: center;
+    margin-top: 0px;
+}
+.white-text {
+    margin-top: 20px;
+    color: #E0E0E0;
+    opacity: 80%;
+    font-size: 2em;
+    font-style: italic;
+}
+
+.para {
+    height: 200px;
+    width: 1000px;
+    padding-left: 40px;
+    /* background-color: antiquewhite; */
+}

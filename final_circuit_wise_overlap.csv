@@ -1,0 +1,78 @@
+Circuit,Total,Count,Average,Min,Max,Country
+Adelaide,2082,11,189.27,104,302,Australia
+Aida,423,2,211.5,159,264,Japan
+Ain-Diab,166,1,166,166,166,Morocco
+Aintree,917,5,183.4,111,285,United Kingdom
+Anderstorp,969,6,161.5,92,242,Sweden
+Austin,1854,10,185.4,117,275,USA
+Avus,161,1,161,161,161,Germany
+Bakou,270,1,270,270,270,Azerbaijan
+Barcelone,6658,33,201.76,83,380,Spain
+Brands-Hatch,2185,12,182.08,118,252,United Kingdom
+Bremgarten,603,5,120.6,93,164,Switzerland
+Buenos-Aires,2892,20,144.6,0,263,Argentina
+Caesars-Palace,356,2,178,175,181,USA
+Clermont-Ferrand,407,4,101.75,49,158,France
+Dallas,218,1,218,218,218,USA
+Detroit,604,3,201.33,154,251,USA
+Dijon-Prenois,738,5,147.6,100,219,France
+Djeddah,357,3,119,111,132,Saudi Arabia
+Donington,248,1,248,248,248,United Kingdom
+East-London,316,3,105.33,93,112,South Africa
+Estoril,2724,13,209.54,147,272,Portugal
+Fuji,978,4,244.5,162,355,Japan
+Hockenheim,7045,37,190.41,102,344,Germany
+Hungaroring,7103,38,186.92,88,296,Hungary
+Imola,238,1,238,238,238,Italy
+Indianapolis,1447,8,180.88,72,325,USA
+Interlagos,7717,37,208.57,117,465,Brazil
+Istanbul,1715,9,190.56,87,391,Turkey
+Jacarepagua,2245,10,224.5,155,270,Brazil
+Jarama,1642,9,182.44,73,347,Spain
+Jerez-de-la-Frontera,931,5,186.2,144,219,Spain
+Kuala-Lumpur,4115,19,216.58,137,424,Malaysia
+Kyalami,4156,20,207.8,120,398,South Africa
+Le-Castellet,3419,18,189.94,125,295,France
+Le-Mans,85,1,85,85,85,France
+Long-Beach,1425,8,178.12,110,308,USA
+Losail,644,2,322,233,411,Qatar
+Magny-Cours,2954,18,164.11,117,286,France
+Melbourne,4459,26,171.5,77,347,Australia
+Mexico-City,3185,20,159.25,75,263,Mexico
+Miami,340,2,170,166,174,USA
+Monaco,8735,69,126.59,51,234,Monaco
+Monsanto,73,1,73,73,73,Portugal
+Mont-Tremblant,261,2,130.5,125,136,Canada
+Montjuic-Park,597,4,149.25,66,221,Spain
+Montreal,8158,42,194.24,103,486,Canada
+Monza,13451,73,184.26,0,340,Italy
+Mosport-Park,1498,8,187.25,92,489,Canada
+Mugello,130,1,130,130,130,Italy
+New-Delhi,597,3,199,134,303,India
+Nivelles,608,2,304,217,391,Belgium
+Nurburgring,3958,26,152.23,33,291,Germany
+Osterreichring,3718,18,206.56,111,368,Austria
+Pedralbes,300,2,150,124,176,Spain
+Pescara,58,1,58,58,58,Italy
+Phoenix,686,3,228.67,211,255,USA
+Portimao,350,2,175,134,216,Portugal
+Porto,170,2,85,60,110,Portugal
+Reims,1823,11,165.73,1,325,France
+Riverside,213,1,213,213,213,USA
+Rouen-les-Essarts,535,5,107,53,146,France
+Sakhir,4567,19,240.37,136,392,Bahrain
+Sebring,96,1,96,96,96,USA
+Shanghai,3890,16,243.12,142,465,China
+Silverstone,10929,57,191.74,91,399,United Kingdom
+Singapour,2853,14,203.79,99,376,Singapore
+Sochi,1248,8,156,64,267,Russia
+Spa-Francorchamps,8925,56,159.38,13,303,Belgium
+Spielberg,3198,17,188.12,87,363,Austria
+Suzuka,6316,33,191.39,115,323,Japan
+Valencia,998,5,199.6,126,367,Spain
+Watkins-Glen,2611,15,174.07,106,360,USA
+Yas-Marina,2602,14,185.86,91,285,United Arab Emirates
+Yeongam,907,4,226.75,170,311,South Korea
+Zandvoort,5091,33,154.27,63,366,Netherlands
+Zeltweg,205,1,205,205,205,Austria
+Zolder,2122,10,212.2,134,349,Belgium
