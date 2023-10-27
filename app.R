@@ -311,8 +311,6 @@ server <- function(input, output, session) {
   
   # ######################## #
   
-  
-  
 
     
   observeEvent(input$godrivertwo, {
@@ -365,50 +363,54 @@ server <- function(input, output, session) {
   })
     
     
-  observeEvent(input$goButton, {
-    race_year <- input$year_inp
-    final <- race_circuits(as.numeric(race_year))
-    updateSelectInput(session = session, inputId = "track", choices = c("Select Circuit", final$Circuits))
-  })
   
-  observeEvent(input$raceButton, {
-    race_year <- input$year_inp
-    final <- race_circuits(as.numeric(race_year))
-    circuit <- input$track
-    merged <- race_positions(final, circuit)
-    #plot_race(merged, circuit)
-    plot <- merged %>% 
-      ggplot(aes(x = as.numeric(Poisition), y = Points, fill = Drivers)) +
-      geom_col(alpha = 0.7) +
-      scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
-      geom_text(aes(y = Points
-                    , label = paste(Drivers)
-                    , color = Drivers)
-                , hjust = - 0.2, size = 5) +
-      labs(title = sprintf('Race for %s', circuit), x = "", y = 'Lap: {closest_state}', caption = "Race") +
-      coord_flip() +
-      scale_x_reverse() +
-      theme_minimal() +
-      theme(axis.text.y = element_blank()
-            , axis.ticks.y = element_blank()
-            , axis.ticks.x = element_blank()
-            , axis.text.x = element_blank()
-            , plot.margin = margin(2, 2, 2, 2, "cm")
-            , plot.title = element_text(size = 20, color = "black", face = "bold")
-            , axis.title = element_text(size=30,face="bold", color="grey")
-            , legend.position = "none"
-            , panel.grid.minor.x = element_blank()
-            , panel.grid.major.x = element_blank()) +
-      transition_states(Laps, state_length = 0, wrap = FALSE)
-    
-    anim_save(filename = "racing.gif", animation = plot, start_pause = 30, end_pause = 30, height = 750, width = 1800, nframes = 200, fps = 20)
-    
-    output$racechart <- renderImage({
-      list(src = "racing.gif", contentType = "image/gif")
-    },deleteFile = FALSE)
-  })
-  
-
+  output$racechart <- renderImage({
+    if (input$goButton & input$year_inp != "Select Year"){
+      race_year <- input$year_inp
+      final <- race_circuits(as.numeric(race_year))
+      updateSelectInput(session = session, inputId = "track", choices = c("Select Circuit", final$Circuits))
+    }
+    else{
+      print("Select valid year")
+    }
+    if (input$raceButton & input$track != 'Select Circuit'){
+      race_year <- input$year_inp
+      circuit <- input$track
+      merged <- race_positions(final, circuit)
+      #plot_race(merged, circuit)
+      plot <- merged %>% 
+        ggplot(aes(x = as.numeric(Poisition), y = Points, fill = Drivers)) +
+        geom_col(alpha = 0.7) +
+        scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
+        geom_text(aes(y = Points
+                      , label = paste(Drivers)
+                      , color = Drivers)
+                  , hjust = - 0.2, size = 5) +
+        labs(title = sprintf('Race for %s', circuit), x = "", y = 'Lap: {closest_state}', caption = "Race") +
+        coord_flip() +
+        scale_x_reverse() +
+        theme_minimal() +
+        theme(axis.text.y = element_blank()
+              , axis.ticks.y = element_blank()
+              , axis.ticks.x = element_blank()
+              , axis.text.x = element_blank()
+              , plot.margin = margin(2, 2, 2, 2, "cm")
+              , plot.title = element_text(size = 20, color = "black", face = "bold")
+              , axis.title = element_text(size=30,face="bold", color="grey")
+              , legend.position = "none"
+              , panel.grid.minor.x = element_blank()
+              , panel.grid.major.x = element_blank()) +
+        transition_states(Laps, state_length = 0, wrap = FALSE)
+      
+      anim_save(filename = "racing.gif", animation = plot, start_pause = 30, end_pause = 30, height = 750, width = 1800, nframes = 200, fps = 20)
+      
+    }
+    else{
+      print("Select Valid Circuit")
+    }
+    list(src = "racing.gif", contentType = "image/gif")
+  }, deleteFile = FALSE
+  )
   
 }
 

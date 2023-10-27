@@ -1,17 +1,36 @@
+# Function to fetch overlap data for a specific racetrack and create a data frame
+# Input: 'name' - the name of the racetrack
+# Output: A data frame containing overlap data for the racetrack
 track_wise <- function(name){
+  # Create the URL for the racetrack page
   track <- sprintf('https://www.statsf1.com/en/circuit-%s.aspx', name)
+  
+  # Create a session and scrape the page
   session <- bow(track)
   cpage <- scrape(session, query=list(t="semi-soft", per_page=100))
+  
+  # Extract the custom key for sorting the circuits
   cir <- cpage %>% html_nodes('.circuittable') %>% html_nodes('td') %>% html_attr('sorttable_customkey')
   cir <- cir[!is.na(cir)][2]
+  
+  # Extract circuit links based on the custom key
   circuit_links <- cpage %>% html_nodes(sprintf('td[sorttable_customkey="%s"]', cir)) %>% html_nodes('a') %>% html_attr('href')
   circuit_links <- sub(x = circuit_links, pattern = "\\.aspx$", replacement = '')
+  
+  # Fetch overlap data for each circuit link
   ov_list <- sapply(X = circuit_links, FUN = safer_overlap)
+  
+  # Create a data frame with overlap data and add the racetrack name
   circs <- data.frame(ov_list)
   circs <- circs %>% mutate('Circuit' = name)
+  
   return(circs)
 }
 
+
+# Function to calculate the total number of overlaps for drivers in a given race
+# Input: 'link' - the URL link to the race data
+# Output: The total number of overlaps for all drivers in the race
 total_overlaps <- function(link){
   suppressMessages({
     url <- sprintf('https://www.statsf1.com%s/tour-par-tour.aspx', link)
@@ -60,6 +79,14 @@ total_overlaps <- function(link){
     return(total)
   })
 }
+
+# Functions to wrap other functions with error handling and return 'NA' in case of an error
+# 'safer_track_wise' wraps 'track_wise' function, and 'safer_overlap' wraps 'total_overlaps' function.
+# Input:
+#   - .f: The function to be wrapped with error handling
+#   - otherwise: The value to return in case of an error
+# Output:
+#   - A function that calls the original function with error handling and returns 'NA' on error
 
 safer_track_wise <- possibly(.f = track_wise, otherwise = NA)
 safer_overlap <- possibly(.f = total_overlaps, otherwise = NA)
